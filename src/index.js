@@ -15,7 +15,7 @@ const flags = {
     "red"
   ]),
 
-  maxItems: new Rox.RoxNumber(5)
+  maxItems: new Rox.RoxNumber(5, 10, 15)
 };
 
 // ---------------------------------------------------------
@@ -46,7 +46,15 @@ if (!sdkKey || sdkKey === "878a6a6f-6d46-491b-9a39-d6be648ed6a2") {
 async function main() {
   console.log("Connecting to CloudBees Unify...");
 
-  await Rox.setup(sdkKey);
+ await Rox.setup(sdkKey, {
+  debugLevel: "verbose",
+
+  configurationFetchedHandler: (result) => {
+    console.log("\n=== CloudBees configuration fetched ===");
+    console.log(result);
+    console.log("========================================\n");
+  }
+});
 
   console.log("Connected to CloudBees Unify.\n");
 
